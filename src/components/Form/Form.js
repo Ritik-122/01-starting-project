@@ -1,27 +1,41 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import classes from '../Form/Form.module.css'
 
-export default function Form() {
-    const clickHandler=(e)=>{
-        e.preventDefault()
-        const NewMovieObj={
-            title:e.target.title.value,
-            opening_text:e.target.opening.value,
-            release_date:e.target.date.value
-        }
-                        console.log(NewMovieObj)
+export default function Form(props) {
+    const titleRef = useRef('');
+    const openingTextRef = useRef('');
+    const releaseDateRef = useRef('');
+  
+    function submitHandler(event) {
+      event.preventDefault();
+  
+      // could add validation here...
+  
+      const movie = {
+        title: titleRef.current.value,
+        openingText: openingTextRef.current.value,
+        releaseDate: releaseDateRef.current.value,
+      };
+  
+      props.addMovieHandler(movie);
     }
-  return (
-
-    <>
-        <form onSubmit={clickHandler}>
-            <label>Title:</label><br/>
-            <input type="text"  name='title' /><br/><br/>
-            <label>Opening Text:</label><br/>
-            <input type="text" name='opening'/><br/><br/>
-            <label>Release Date:</label><br/>
-            <input type="date" name='date'/><br/><br/>
-            <button type='submit' >Add Movie</button><br/><br/><br/>
-        </form>
-    </>
-  )
+  
+    return (
+      <form onSubmit={submitHandler}>
+        <div className={classes.control}>
+          <label htmlFor='title'>Title</label>
+          <input type='text' id='title' ref={titleRef} />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor='opening-text'>Opening Text</label>
+          <textarea rows='5' id='opening-text' ref={openingTextRef}></textarea>
+        </div>
+        <div className={classes.control}>
+          <label htmlFor='date'>Release Date</label>
+          <input type='text' id='date' ref={releaseDateRef} />
+        </div>
+        <button>Add Movie</button>
+      </form>
+    );
+  
 }
