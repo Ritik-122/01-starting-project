@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-
+import Form from "./components/Form/Form";
 import MoviesList from "./components/MoviesList";
 import "./App.css";
 
@@ -12,7 +12,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const d = await fetch("https://swapi.py4e.com/api/fims/");
+      const d = await fetch("https://swapi.py4e.com/api/films/");
 
       if (!d.ok) {
         throw new Error("...Retrying");
@@ -67,7 +67,9 @@ function App() {
 
   return (
     <React.Fragment>
+   
       <section>
+      <Form />
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>
       <section>{content}</section>
